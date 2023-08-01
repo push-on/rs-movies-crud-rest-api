@@ -24,8 +24,13 @@ struct Director {
 // Define a type alias for a shared state that holds a HashMap of movies
 type MovieData = web::Data<Mutex<HashMap<Uuid, Movie>>>;
 
+fn print_request(method: &str, path: &str) {
+    println!("{} request to {}", method, path);
+}
 // Define a handler function for getting all movies
 async fn get_movies(data: MovieData) -> impl Responder {
+    print_request("GET", "/movies");
+
     // Lock the data and get a reference to the HashMap
     let movies = data.lock().unwrap();
 
@@ -38,6 +43,8 @@ async fn get_movies(data: MovieData) -> impl Responder {
 
 // Define a handler function for getting a movie by ID
 async fn get_movie_by_id(data: MovieData, id: web::Path<Uuid>) -> impl Responder {
+    print_request("GET", &format!("/movies/{}", id));
+
     // Lock the data and get a reference to the HashMap
     let movies = data.lock().unwrap();
 
@@ -52,6 +59,8 @@ async fn get_movie_by_id(data: MovieData, id: web::Path<Uuid>) -> impl Responder
 
 // Define a handler function for creating a new movie
 async fn create_movie(data: MovieData, movie: web::Json<Movie>) -> impl Responder {
+    print_request("POST", "/movies");
+
     // Lock the data and get a mutable reference to the HashMap
     let mut movies = data.lock().unwrap();
 
@@ -79,6 +88,8 @@ async fn update_movie_by_id(
     id: web::Path<Uuid>,
     movie: web::Json<Movie>,
 ) -> impl Responder {
+    print_request("PUT", &format!("/movies/{}", id));
+
     // Lock the data and get a mutable reference to the HashMap
     let mut movies = data.lock().unwrap();
 
@@ -99,6 +110,8 @@ async fn update_movie_by_id(
 
 // Define a handler function for deleting a movie by ID
 async fn delete_movie_by_id(data: MovieData, id: web::Path<Uuid>) -> impl Responder {
+    print_request("DELETE", &format!("/movies/{}", id));
+
     // Lock the data and get a mutable reference to the HashMap
     let mut movies = data.lock().unwrap();
 
@@ -161,5 +174,4 @@ async fn main() -> std::io::Result<()> {
     .bind("127.0.0.1:8080")?
     .run()
     .await
-
 }

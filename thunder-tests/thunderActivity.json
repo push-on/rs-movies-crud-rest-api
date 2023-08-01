@@ -1,0 +1,16 @@
+[
+    {
+        "_id": "e01fb8d6-bcfc-41b3-b53c-37e60fc7edcf",
+        "colId": "history",
+        "containerId": "",
+        "name": "http://localhost:8080/movies",
+        "url": "http://localhost:8080/movies",
+        "method": "GET",
+        "sortNum": 0,
+        "created": "2023-08-01T08:47:46.161Z",
+        "modified": "2023-08-01T08:47:46.161Z",
+        "headers": [],
+        "params": [],
+        "tests": []
+    }
+]

@@ -846,7 +846,6 @@ name = "rs-movies-crud"
 version = "0.1.0"
 dependencies = [
  "actix-web",
- "rand",
  "serde",
  "uuid",
 ]

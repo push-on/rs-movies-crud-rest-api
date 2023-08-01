@@ -116,35 +116,37 @@ async fn delete_movie_by_id(data: MovieData, id: web::Path<Uuid>) -> impl Respon
 async fn main() -> std::io::Result<()> {
     // Create an initial HashMap of movies for testing purposes
     let mut movies = HashMap::new();
-    
-     // Insert some sample movies into the HashMap 
-     movies.insert(
-         Uuid::new_v4(),
-         Movie {
-             id: Uuid::new_v4(),
-             isbn: "978-3-16-148410-0".to_string(),
-             title: "The Lord of the Rings".to_string(),
-             director: Director {
-                 firstname: "Peter".to_string(),
-                 lastname: "Jackson".to_string(),
-             },
-         },
-     );
-     movies.insert(
-         Uuid::new_v4(),
-         Movie {
-             id: Uuid::new_v4(),
-             isbn: "978-0-06-055812-8".to_string(),
-             title: "The Hitchhiker's Guide to the Galaxy".to_string(),
-             director: Director {
-                 firstname: "Garth".to_string(),
-                 lastname: "Jennings".to_string(),
-             },
-         },
-     );
+
+    // Insert some sample movies into the HashMap
+    movies.insert(
+        Uuid::new_v4(),
+        Movie {
+            id: Uuid::new_v4(),
+            isbn: "978-3-16-148410-0".to_string(),
+            title: "The Lord of the Rings".to_string(),
+            director: Director {
+                firstname: "Peter".to_string(),
+                lastname: "Jackson".to_string(),
+            },
+        },
+    );
+    movies.insert(
+        Uuid::new_v4(),
+        Movie {
+            id: Uuid::new_v4(),
+            isbn: "978-0-06-055812-8".to_string(),
+            title: "The Hitchhiker's Guide to the Galaxy".to_string(),
+            director: Director {
+                firstname: "Garth".to_string(),
+                lastname: "Jennings".to_string(),
+            },
+        },
+    );
 
     // Wrap the HashMap in a Mutex and a web::Data for shared state
     let data = web::Data::new(Mutex::new(movies));
+
+    println!("Server starting on port 8080...");
 
     // Run the server and register the routes with the shared state
     HttpServer::new(move || {
@@ -159,4 +161,5 @@ async fn main() -> std::io::Result<()> {
     .bind("127.0.0.1:8080")?
     .run()
     .await
+
 }
